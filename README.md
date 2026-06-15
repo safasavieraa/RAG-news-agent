@@ -30,7 +30,8 @@ Chatbot ini dapat menjawab pertanyaan seputar berita Indonesia berdasarkan artik
 
 ## Arsitektur RAG
 ## 📊 Dataset
-- 1.000 artikel berita Indonesia dari Kompas, Tempo, Detik
+- **Lokal:** 5.000 artikel berita Indonesia dari Kompas, Tempo, Detik
+- **Live Demo:** 1.000 artikel (keterbatasan free tier HuggingFace)
 - Periode: 2024-2025
 
 ## Cara Menjalankan Lokal
