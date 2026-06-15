@@ -86,7 +86,6 @@ with gr.Blocks(css=css) as demo:
         height=450,
         bubble_full_width=False,
         show_label=False,
-        avatar_images=("👤", "🗞️"),
     )
 
     with gr.Row():
