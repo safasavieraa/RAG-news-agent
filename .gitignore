@@ -1,0 +1,8 @@
+venv/
+.env
+__pycache__/
+*.pyc
+faiss_index/
+data/final_merge_dataset.csv
+data/clean_articles.csv
+Add-Content .gitignore "`ndata/clean_articles_hf.csv"
