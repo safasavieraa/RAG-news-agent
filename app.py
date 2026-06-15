@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Build FAISS index otomatis jika belum ada
 if not os.path.exists('faiss_index'):
     print("Membangun FAISS index dari CSV...")
     from src.vector_store import build_vector_store
@@ -28,58 +27,17 @@ def get_sources(question):
         )
     return "\n\n".join(sources)
 
-def chat(message, history):
-    if not message.strip():
-        return ""
-    response = rag_chain.invoke(message)
-    answer = response.content
-    sources = get_sources(message)
-    return f"{answer}\n\n---\n📚 **Sumber Artikel:**\n{sources}"
-
-# Custom CSS
 css = """
-.gradio-container {
-    max-width: 900px !important;
-    margin: auto !important;
-}
-#header {
-    text-align: center;
-    padding: 20px;
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-#header h1 {
-    color: #e94560;
-    font-size: 2em;
-    margin: 0;
-}
-#header p {
-    color: #a8b2d8;
-    margin: 5px 0 0 0;
-}
-.badge {
-    display: inline-block;
-    background: #e94560;
-    color: white;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 0.8em;
-    margin: 2px;
-}
+.gradio-container { max-width: 900px !important; margin: auto !important; }
 """
 
 with gr.Blocks(css=css) as demo:
-    gr.HTML("""
-    <div id="header">
-        <h1>RAG News Agent Indonesia</h1>
-        <p>Chatbot berita Indonesia berbasis Retrieval-Augmented Generation</p>
-        <br>
-        <span class="badge">🤖 Groq LLaMA 3.1</span>
-        <span class="badge">🔍 FAISS Vector Search</span>
-        <span class="badge">📰 Kompas • Tempo • Detik</span>
-    </div>
-    """)
+    gr.Markdown("""
+# 🗞️ RAG News Agent Indonesia
+### Chatbot berita Indonesia berbasis Retrieval-Augmented Generation
+**🤖 Groq LLaMA 3.1** &nbsp;|&nbsp; **🔍 FAISS Vector Search** &nbsp;|&nbsp; **📰 Kompas • Tempo • Detik**
+---
+""")
 
     chatbot = gr.Chatbot(
         label="",
@@ -94,12 +52,10 @@ with gr.Blocks(css=css) as demo:
             label="",
             scale=9,
             lines=1,
-            autofocus=True
         )
         send_btn = gr.Button("Kirim →", scale=1, variant="primary")
 
-    with gr.Row():
-        clear_btn = gr.Button("🗑️ Bersihkan Chat", variant="secondary")
+    clear_btn = gr.Button("🗑️ Bersihkan Chat", variant="secondary")
 
     gr.Examples(
         examples=[
@@ -112,12 +68,10 @@ with gr.Blocks(css=css) as demo:
         label="💡 Contoh Pertanyaan"
     )
 
-    gr.HTML("""
-    <div style="text-align:center; padding:15px; color:#666; font-size:0.85em; border-top: 1px solid #333; margin-top:10px">
-        <b>Tech Stack:</b> Python • LangChain • FAISS • Groq LLaMA 3.1 • Gradio &nbsp;|&nbsp;
-        <b>Dataset:</b> 5.000 artikel berita Indonesia (2024-2025)
-    </div>
-    """)
+    gr.Markdown("""
+---
+**Tech Stack:** Python • LangChain • FAISS • Groq LLaMA 3.1 • Gradio | **Dataset:** 5.000 artikel berita Indonesia (2024-2025)
+""")
 
     state = gr.State([])
 
